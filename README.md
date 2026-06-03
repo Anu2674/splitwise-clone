@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SplitEase — Splitwise Clone
 
-## Getting Started
+A full-stack expense-splitting app built with Next.js 16, Prisma 7, PostgreSQL (Supabase), and real-time chat via Pusher.
 
-First, run the development server:
+**AI Tool Used:** Claude Code (claude-sonnet-4-6) by Anthropic
 
+---
+
+## Features
+- Auth — Register and login with email/password (NextAuth.js)
+- Groups — Create groups, add/remove members by email
+- Expenses — 4 split modes: Equal / Unequal / Percentage / By Shares
+- Balances — Group-wise and individual balance summary with debt simplification
+- Settle up — Record payments between members
+- Real-time chat — Live chat per expense (Pusher WebSockets)
+
+---
+
+## Quick Setup
+
+### 1. Install
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Supabase (Database)
+1. Create project at [supabase.com](https://supabase.com)
+2. Go to Settings → Database → Connection String (URI)
+3. Copy the connection string
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Pusher (Real-time Chat)
+1. Create app at [pusher.com](https://pusher.com)
+2. Copy App ID, Key, Secret, Cluster
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Environment Variables
+Fill in `.env`:
+```env
+DATABASE_URL="postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres"
+NEXTAUTH_SECRET="your-random-secret-32-chars"
+NEXTAUTH_URL="http://localhost:3000"
+PUSHER_APP_ID="..."
+PUSHER_KEY="..."
+PUSHER_SECRET="..."
+PUSHER_CLUSTER="ap2"
+NEXT_PUBLIC_PUSHER_KEY="..."
+NEXT_PUBLIC_PUSHER_CLUSTER="ap2"
+```
 
-## Learn More
+### 5. Run
+```bash
+npx prisma migrate dev --name init
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open [http://localhost:3000](http://localhost:3000)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploy to Vercel
+1. Push to GitHub (personal account)
+2. Import at [vercel.com](https://vercel.com)
+3. Add all env vars in Vercel dashboard
+4. Deploy
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Tech Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Layer | Tech |
+|---|---|
+| Framework | Next.js 16 App Router |
+| Language | TypeScript |
+| Database | PostgreSQL (Supabase free tier) |
+| ORM | Prisma 7 |
+| Auth | NextAuth.js v4 |
+| Real-time | Pusher WebSockets |
+| Styling | Tailwind CSS v4 |
+| Deploy | Vercel |
